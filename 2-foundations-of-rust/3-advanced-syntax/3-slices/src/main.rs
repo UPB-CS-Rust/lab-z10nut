@@ -10,8 +10,8 @@
 fn merge(a: &[i32], b: &[i32]) -> Vec<i32> {
     let mut dest = Vec::new();
 
-    let a_idx = 0;
-    let b_idx = 0;
+    let mut a_idx = 0;
+    let mut b_idx = 0;
 
     while a_idx < a.len() && b_idx < b.len() {
         if a[a_idx] <= b[b_idx] {
@@ -23,11 +23,11 @@ fn merge(a: &[i32], b: &[i32]) -> Vec<i32> {
         }
     }
 
-    for elem in a[a_idx..] {
-        dest.push(elem)
+    for elem in &a[a_idx..] {
+        dest.push(*elem)
     }
-    for elem in b[b_idx..] {
-        dest.push(elem)
+    for elem in &b[b_idx..] {
+        dest.push(*elem)
     }
 
     dest
@@ -37,7 +37,11 @@ fn merge(a: &[i32], b: &[i32]) -> Vec<i32> {
 fn merge_sort(data: &[i32]) -> Vec<i32> {
     if data.len() > 1 {
         // implement this
-        todo!()
+        let mid = data.len() / 2;
+        let left = merge_sort(&data[..mid]);
+        let right = merge_sort(&data[mid..]);
+
+        merge(&left, &right)
     } else {
         data.to_vec()
     }
